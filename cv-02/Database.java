@@ -1,8 +1,8 @@
 
 
 public class Database {
-    private final String Name;
-    private final int Birth;
+    private String Name;
+    private int Birth;
     private float Pay;
     static float MaximumPay = 1;
 

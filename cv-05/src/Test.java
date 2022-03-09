@@ -11,8 +11,11 @@ public class Test {
         if (field[i] instanceof Food) {
             System.out.println(field[i].getName() + ", Cena: " + field[i].getPrize() + ", Trvanlivost: " + ((Food)field[i]).getDurability() + " " + field[i].getUnit());
         }
-        else {
+        else if (field[i] instanceof Tools) {
             System.out.println(field[i].getName() + ", Cena: " + field[i].getPrize());
+        }
+        else {
+            System.out.println("Nevím co s tím");
         }
     }
     }

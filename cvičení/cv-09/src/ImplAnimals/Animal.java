@@ -1,6 +1,6 @@
 package ImplAnimals;
 
 public interface Animal {
-    public String sound();
-    public int age = 0;
+     String sound();
+     int age = 0;
 }

@@ -14,9 +14,7 @@ public class Employee {
         this.password =  password;
         this.employeeType = employeeType;
     }
-    public Employee() {
 
-    }
     public enum EmployeeType {
         ACTIVE,
         INACTIVE,

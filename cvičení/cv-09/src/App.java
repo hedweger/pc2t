@@ -17,10 +17,10 @@ public class App {
      */
     public static void main(String[] args) {
         // company
-        Employee E1 = new Employee("first","1@first.com", "f1irst".toCharArray(), Employee.EmployeeType.ACTIVE );
+        Employee E1 = new Employee("first","12@first.com", "f1irst".toCharArray(), Employee.EmployeeType.ACTIVE );
         Employee E2 = new Employee("second","3first.com", "f2irst".toCharArray(), Employee.EmployeeType.INACTIVE );
         Employee E3 = new Employee("third","2@first.com", "fi3rst".toCharArray(), Employee.EmployeeType.ACTIVE );
-        Employee E4 = new Employee("fourth","4@first.com", "f4irst".toCharArray(), Employee.EmployeeType.INACTIVE );
+        Employee E4 = new Employee("fourth","8@first.com", "f4irst".toCharArray(), Employee.EmployeeType.INACTIVE );
         Employee E5 = new Employee("fifth","5@first.com", "f5irst".toCharArray(), Employee.EmployeeType.ACTIVE );
         Secretarian S1 = new Secretarian("firstS", "1@second.com", "se1cond".toCharArray(), Employee.EmployeeType.ACTIVE, 43);
         Secretarian S2 = new Secretarian("secondS", "2@second.com", "se2cond".toCharArray(), Employee.EmployeeType.INACTIVE, 56);

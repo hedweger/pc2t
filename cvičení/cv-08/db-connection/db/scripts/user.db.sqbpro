@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Seda/Desktop/mysql sqllite converter/user.db" foreign_keys="1"/><window><current_tab id="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1087"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="user_has_role"/><default_encoding codec=""/><browsetable_info data="AAAAAwAAABoAdQBzAGUAcgBfAGgAYQBzAF8AcgBvAGwAZQAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////////AAAAAP////8AAAAIAHUAcwBlAHIAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////wAAAAD/////AAAACAByAG8AbABlAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////8AAAAA/////w=="/></tab_browse><tab_sql><sql name="SQL 1">BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS `user` (
+	`id_user`	INTEGER NOT NULL,
+	`email`	TEXT NOT NULL UNIQUE,
+	`name`	TEXT NOT NULL,
+	`surname`	TEXT NOT NULL,
+	`age`	INTEGER,
+	`salary`	INTEGER,
+	PRIMARY KEY(`id_user`)
+);
+
+CREATE TABLE IF NOT EXISTS `role` (
+	`id_role`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`name`	INTEGER NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS `user_has_role` (
+	`user_id_user`	INTEGER,
+	`role_id_role`	INTEGER,
+	FOREIGN KEY(`role_id_role`) REFERENCES `role`(`id_role`),
+	FOREIGN KEY(`user_id_user`) REFERENCES `user`(`id_user`)
+);
+
+INSERT INTO `user_has_role` VALUES (1,1);
+INSERT INTO `user_has_role` VALUES (2,1);
+INSERT INTO `user_has_role` VALUES (3,2);
+
+INSERT INTO `user` VALUES (1,'myemail@stud.feec.vutbr.cz','Anonymous','AnonymousSurname',22,30000);
+INSERT INTO `user` VALUES (2,'student@vutbr.cz','studentName','studentSurname',21,10000);
+INSERT INTO `user` VALUES (3,'admin@vutbr.cz','Jon','Doe',46,50000);
+
+INSERT INTO `role` VALUES (1,'USER');
+INSERT INTO `role` VALUES (2,'ADMIN');
+INSERT INTO `role` VALUES (3,'MANAGER');
+COMMIT;
+</sql><sql name="SQL 1"></sql><current_tab id="1"/></tab_sql></sqlb_project>

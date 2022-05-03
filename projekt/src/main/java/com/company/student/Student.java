@@ -1,10 +1,10 @@
-package com.company;
+package com.company.student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Student {
+public abstract class Student {
     public Student() {}
     public Student(String f_name, String l_name, List<Integer> Marks, LocalDate date) {
         this.f_name = f_name;
@@ -21,6 +21,7 @@ abstract class Student {
     public String getBirthday() {
         return date.toString();
     }
+    public LocalDate getBirthdayDate() { return date;}
     // methods for working with marks
     public void AddMark(int mark) { Marks.add(mark); }
     public double getMean() {
@@ -35,7 +36,6 @@ abstract class Student {
             marks += Marks.get(i) + " ";
         return marks;
     }
-
     protected List<Integer> Marks = new ArrayList<Integer>();
     protected String f_name, l_name;
     protected LocalDate date;

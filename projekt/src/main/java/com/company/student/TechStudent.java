@@ -1,4 +1,4 @@
-package com.company;
+package com.company.student;
 
 import java.time.LocalDate;
 import java.util.*;

@@ -1,10 +1,19 @@
 package com.company;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
+import com.company.dbconn.DBConn;
+import com.company.student.HumStudent;
+import com.company.student.Student;
+import com.company.student.TechStudent;
 
 import static java.lang.System.in;
 
@@ -73,7 +82,7 @@ public class Database {
     public void getStudentsByGroup(String group) {
         if (group.equalsIgnoreCase("T")) {
             for (int i = 0; i < data.size(); i++ ) {
-                if ( data.get(i).getClass().getName() == "com.company.TechStudent") {
+                if ( data.get(i).getClass().getName() == "com.company.student.TechStudent") {
                     System.out.println(
                             "Jmeno: " + data.get(i).getName() +
                             ", Datum narozeni: " + data.get(i).getBirthday() +
@@ -85,7 +94,7 @@ public class Database {
             }
             if (group.equalsIgnoreCase("H")) {
                 for (int i = 0; i < data.size(); i++) {
-                    if (data.get(i).getClass().getName() == "com.company.HumStudent") {
+                    if (data.get(i).getClass().getName() == "com.company.student.HumStudent") {
                         System.out.println("Jmeno: " + data.get(i).getName() +
                                 ", Datum narozeni: " + data.get(i).getBirthday() +
                                 ", Prumer: " + data.get(i).getMean()
@@ -112,9 +121,9 @@ public class Database {
         var humcount = 0;
         for (int i = 0; i < data.size(); i++) {
             var group = data.get(i).getClass().getName();
-            if (group == "com.company.TechStudent")
+            if (group == "com.company.student.TechStudent")
                 techcount++;
-            if (group == "com.company.HumStudent")
+            if (group == "com.company.student.HumStudent")
                 humcount++;
         }
         System.out.println("Technika: " + techcount + " \n" +
@@ -166,9 +175,59 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public void addToSQL() {
+        Connection conn = DBConn.getDbConn();
+        String sql = "insert into Students (typeofstudent, f_name, l_name, birthday, marks) values (?,?,?,?,?)";
+
+        for (int i = 0; i < data.size(); i++) {
+            try {
+                PreparedStatement statement = conn.prepareStatement(sql);
+                String name = data.get(i).getName();
+                String[] splitname = name.split(" ");
+                statement.setString(1, data.get(i).getGroup());
+                statement.setString(2, splitname[0]);
+                statement.setString(3, splitname[1]);
+                statement.setString(4, data.get(i).getBirthday());
+                statement.setString(5, data.get(i).getMarks());
+                statement.executeUpdate();
+                System.out.println("Vlozeno do SQL");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void getFromSQL() {
+        Connection conn = DBConn.getDbConn();
+        String sql = "select * from Students";
+        int id = data.size();
+        List<Integer> marks = new ArrayList<>();
+        try (PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery()) {
+            while(rs.next()) {
+                id++;
+                var name = rs.getString("typeofstudent");
+                if (name.equalsIgnoreCase("T")){
+                    var test = rs.getString("marks").split(" ");
+                    for (int i = 0; i < test.length; i++)
+                        marks.add(Integer.parseInt(test[i]));
+                    data.put(id, new TechStudent(rs.getString("f_name"), rs.getString("l_name"), marks, LocalDate.parse(rs.getString("birthday"))));
+                    System.out.println("Pridano!");
+                }
+                if (name.equalsIgnoreCase("H")){
+                    var test = rs.getString("marks").split(" ");
+                    for (int i = 0; i < test.length; i++)
+                        marks.add(Integer.parseInt(test[i]));
+                    data.put(id, new HumStudent(rs.getString("f_name"), rs.getString("l_name"), marks, LocalDate.parse(rs.getString("birthday"))));
+                    System.out.println("Pridano!");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public Student getStudent(int ID) { return data.get(ID); }
 
 
     Scanner sc = new Scanner(in);
-    private HashMap<Integer, Student> data;
+    private final HashMap<Integer, Student> data;
 }
